@@ -1,13 +1,13 @@
-package ru.aleksanyan.javaadvance;
+package ru.aleksanyan.javaadvance.lesson1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JavaadvanceApplication {
+public class ApplicationRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JavaadvanceApplication.class, args);
+		SpringApplication.run(ApplicationRunner.class, args);
 	}
 
 }

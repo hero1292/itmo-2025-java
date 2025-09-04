@@ -1,10 +1,10 @@
-package ru.aleksanyan.javaadvance;
+package ru.aleksanyan.javaadvance.lesson1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JavaadvanceApplicationTests {
+class ApplicationRunnerTests {
 
 	@Test
 	void contextLoads() {
