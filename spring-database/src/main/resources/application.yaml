@@ -1,0 +1,9 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: spring-database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cities
+    username: postgres
+    password: root
