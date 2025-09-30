@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-seed
+      author: you
+      changes:
+        - insert:
+            tableName: regions
+            columns:
+              - column: { name: code, value: RU-MOW }
+              - column: { name: name_ru, value: Москва }
+              - column: { name: name_en, value: Moscow }
+        - insert:
+            tableName: regions
+            columns:
+              - column: { name: code, value: RU-SPE }
+              - column: { name: name_ru, value: Санкт-Петербург }
+              - column: { name: name_en, value: Saint Petersburg }
+        - insert:
+            tableName: cities
+            columns:
+              - column: { name: code, value: MOW }
+              - column: { name: name_ru, value: Москва }
+              - column: { name: name_en, value: Moscow }
+              - column: { name: population, valueNumeric: 13000000 }
+              - column:
+                  name: region_id
+                  valueComputed: (select id from regions where code='RU-MOW')
+        - insert:
+            tableName: cities
+            columns:
+              - column: { name: code, value: SPE }
+              - column: { name: name_ru, value: Санкт-Петербург }
+              - column: { name: name_en, value: Saint Petersburg }
+              - column: { name: population, valueNumeric: 5600000 }
+              - column:
+                  name: region_id
+                  valueComputed: (select id from regions where code='RU-SPE')
