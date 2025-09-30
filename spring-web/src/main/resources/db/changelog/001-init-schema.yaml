@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-tables
+      author: you
+      changes:
+        - createTable:
+            tableName: regions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_regions
+              - column:
+                  name: code
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name_ru
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name_en
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: cities
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_cities
+              - column:
+                  name: code
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name_ru
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name_en
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: population
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: region_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: cities
+            baseColumnNames: region_id
+            constraintName: fk_cities_region
+            referencedTableName: regions
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - createIndex:
+            tableName: cities
+            indexName: idx_cities_region_id
+            columns:
+              - column:
+                  name: region_id
+
+        - sql:
+            dbms: postgresql
+            sql: |
+              ALTER TABLE cities
+              ADD CONSTRAINT chk_cities_population_nonneg
+              CHECK (population >= 0);
+
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |
+              ALTER TABLE cities DROP CONSTRAINT IF EXISTS chk_cities_population_nonneg;
+        - dropForeignKeyConstraint:
+            baseTableName: cities
+            constraintName: fk_cities_region
+        - dropTable:
+            tableName: cities
+        - dropTable:
+            tableName: regions
